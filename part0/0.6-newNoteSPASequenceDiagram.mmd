@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant user
+    participant browser
+    participant server
+
+    user->>browser: Type note and click Save
+
+    browser->>browser: JavaScript handles form submit and prevents the default behavior
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    activate server
+    server-->>browser: 201 created status
+    deactivate server
+
+    browser->>browser: Update the notes list without full page reload
