@@ -1,16 +1,26 @@
-# React + Vite
+# Phonebook
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<!-- One-liner: a React phonebook app with search/filtering and a form for
+     adding entries, backed by a mock REST API (json-server). -->
 
-Currently, two official plugins are available:
+## What this project covers
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+<!-- Bullets, e.g.: controlled form inputs, filtering with derived state,
+     fetching initial data with useEffect + axios, component decomposition -->
 
-## React Compiler
+## Running locally
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Requires two terminals:
 
-## Expanding the ESLint configuration
+```bash
+# Terminal 1 — mock REST API on http://localhost:3001
+npm run server
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Terminal 2 — Vite dev server
+npm run dev
+```
+
+## Focus
+
+<!-- 1–2 sentences: what this app demonstrates about frontend–backend
+     communication, and what you'd add next. -->
