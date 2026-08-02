@@ -3,12 +3,15 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import phoneService from './services/phone'
+import Notification from './components/Notification'
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     phoneService
@@ -17,6 +20,11 @@ const App = () => {
         setPersons(initialPersons)
       })
   }, [])
+
+  const showMessage = (text, type) => {
+    setMessage({ text, type })
+    setTimeout(() => setMessage(null), 5000)
+  }
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -30,6 +38,14 @@ const App = () => {
           .update(existingPerson.id, changedPerson)
           .then(returnedPerson => {
             setPersons(persons.map(person => person.id === existingPerson.id ? returnedPerson : person))
+            showMessage(`Updated ${newName}`, 'success')
+            setNewName('')
+            setNewNumber('')
+          }).catch(error => {
+            showMessage(
+              `Information of ${newName} has already been removed from server`, 'error'
+            )
+            setPersons(persons.filter(person => person.id !== existingPerson.id))
             setNewName('')
             setNewNumber('')
           })
@@ -45,12 +61,13 @@ const App = () => {
       .then(
         returnedPerson => {
           setPersons(persons.concat(returnedPerson))
+          showMessage(`Added ${newName}`, 'success')
           setNewName('')
           setNewNumber('')
         }
       )
+      }
     }
-  }
 
   const handleDelete = (id, name) => {
     if (window.confirm(`Delete ${name}`)) {
@@ -79,6 +96,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message}/>
       <Filter handleFilterChange={handleFilterChange}/>
       
       <h3>Add a new</h3>
