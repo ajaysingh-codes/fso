@@ -24,14 +24,23 @@ let persons = [
     }
 ]
 
+/*
+    Get all persons from the phonebook
+*/
 app.get('/api/persons', (request, response) => {
     response.json(persons)
 })
 
+/*
+    Get the number of persons in the phonebook
+*/
 app.get('/info', (request, response) => {
     response.send(`<p>Phonebook has info for ${persons.length} people</p> <p>${new Date()}</p>`)
 })
 
+/*
+    Get a person from the phonebook by id
+*/
 app.get('/api/persons/:id', (request, response) => {
     const id = request.params.id
 
@@ -42,6 +51,16 @@ app.get('/api/persons/:id', (request, response) => {
     else {
         response.status(404).end()
     }
+})
+
+/*
+    Delete a person from the phonebook by id
+*/
+app.delete('/api/persons/:id', (request, response) => {
+    const id = request.params.id
+    persons = persons.filter(person => person.id !== id)
+
+    response.status(204).end()
 })
 
 const PORT = 3001
