@@ -4,7 +4,12 @@ const app = express()
 
 app.use(express.json())
 
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
+morgan.token('post-log', function (req, res) { 
+    if (req.method === 'POST') {
+        return JSON.stringify(req.body)
+    }
+})
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :post-log'))
 
 let persons = [
     { 
