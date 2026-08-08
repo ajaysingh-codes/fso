@@ -9,8 +9,8 @@
 |------|-------|--------|------|
 | 0 | Fundamentals of Web apps | ✅ | [part0](./part0) |
 | 1 | Introduction to React | ✅ | [part1](./part1) |
-| 2 | Communicating with server | 🚧 In progress | [part2](./part2) |
-| 3 | Programming a server with Node.js and Express | ⬜ | — |
+| 2 | Communicating with server | ✅ | [part2](./part2) |
+| 3 | Programming a server with Node.js and Express | 🚧 In progress | — |
 | 4 | Testing Express servers, user administration | ⬜ | — |
 | 5 | Testing React apps | ⬜ | — |
 | 6 | Advanced state management | ⬜ | — |
@@ -49,7 +49,7 @@ fso/
 
 ## Tech stack
 
-React 19 · Vite · axios · json-server · ESLint
+React 19 · Express · Render · json-server · Node.js
 
 <!-- Update this line as the course adds Node.js, Express, databases, etc. -->
 
