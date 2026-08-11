@@ -1,12 +1,13 @@
+require('dotenv').config ()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const Person = require('./models/phone')
+
 const app = express()
 
 app.use(express.json())
-
 app.use(cors())
-
 app.use(express.static('dist'))
 
 morgan.token('post-log', function (req, res) { 
@@ -48,7 +49,9 @@ const generateId = () => {
     Get all persons from the phonebook
 */
 app.get('/api/persons', (request, response) => {
-    response.json(persons)
+    Person.find({}).then(persons => {
+        response.json(persons)
+    })
 })
 
 /*
@@ -98,14 +101,17 @@ app.post('/api/persons', (request, response) => {
         })
     }
 
-    const person = {
-        id: generateId(),
+    const person = new Person({
         name: body.name,
         number: body.number
-    }
+    })
 
-    persons = persons.concat(person)
-    response.json(person)
+    person.save().then(savedPerson => {
+        response.json(savedPerson)
+    })
+
+    // persons = persons.concat(person)
+    // response.json(person)
 })
 
 const PORT = process.env.PORT || 3001
