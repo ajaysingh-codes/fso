@@ -6,9 +6,9 @@ const Person = require('./models/phone')
 
 const app = express()
 
-app.use(express.json())
 app.use(cors())
 app.use(express.static('dist'))
+app.use(express.json())
 
 morgan.token('post-log', function (req, res) { 
     if (req.method === 'POST') {
@@ -25,14 +25,7 @@ const generateId = () => {
 }
 */
 
-const errorHandler = (error, request, response, next) => {
-    console.log(error.message)
 
-    if (error.name === 'CastError') {
-        return response.status(400).send({ error: 'malformatted id'})
-    }
-    next(error)
-}
 
 /*
     Get all persons from the phonebook
@@ -47,13 +40,15 @@ app.get('/api/persons', (request, response) => {
     Get the number of persons in the phonebook
 */
 app.get('/info', (request, response) => {
-    response.send(`<p>Phonebook has info for ${persons.length} people</p> <p>${new Date()}</p>`)
+    Person.countDocuments().then(count => 
+        response.send(`<p>Phonebook has info for ${count} people</p> <p>${new Date()}</p>`)
+    )
 })
 
 /*
     Get a person from the phonebook by id
 */
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
     Person.findById(request.params.id)
         .then(person => {
             if (person) {
@@ -69,14 +64,12 @@ app.get('/api/persons/:id', (request, response) => {
 /*
     Delete a person from the phonebook by id
 */
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndDelete(request.params.id)
         .then(result => {
             response.status(204).end()
         })
-    // const id = request.params.id
-    // persons = persons.filter(person => person.id !== id)
-
+        .catch(error => next(error))
 })
 
 app.post('/api/persons', (request, response) => {
@@ -88,11 +81,13 @@ app.post('/api/persons', (request, response) => {
         })
     } 
 
+    /*
     if (persons.some(person => person.name === body.name)) {
         return response.status(400).json({
             error: 'name must be unique'
         })
     }
+    */
 
     const person = new Person({
         name: body.name,
@@ -103,6 +98,40 @@ app.post('/api/persons', (request, response) => {
         response.json(savedPerson)
     })
 })
+
+app.put('/api/persons/:id', (request, response, next) => {
+    const { name, number } = request.body
+
+    Person.findById(request.params.id)
+        .then(person => {
+            if (!person) {
+                return response.status(404).end()
+            }
+
+            person.name = name
+            person.number = number
+
+            return person.save().then((updatedPerson) => {
+                response.json(updatedPerson)
+            })
+        })
+        .catch(error => next(error))
+}) 
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint'})
+}
+
+app.use(unknownEndpoint)
+
+const errorHandler = (error, request, response, next) => {
+    console.log(error.message)
+
+    if (error.name === 'CastError') {
+        return response.status(400).send({ error: 'malformatted id'})
+    }
+    next(error)
+}
 
 app.use(errorHandler)
 
