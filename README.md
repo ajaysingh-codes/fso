@@ -10,7 +10,7 @@
 | 0 | Fundamentals of Web apps | ✅ | [part0](./part0) |
 | 1 | Introduction to React | ✅ | [part1](./part1) |
 | 2 | Communicating with server | ✅ | [part2](./part2) |
-| 3 | Programming a server with Node.js and Express | 🚧 In progress | — |
+| 3 | Programming a server with Node.js and Express | ✅ | [part3](./part3/phonebook-backend) |
 | 4 | Testing Express servers, user administration | ⬜ | — |
 | 5 | Testing React apps | ⬜ | — |
 | 6 | Advanced state management | ⬜ | — |
@@ -32,9 +32,11 @@ fso/
 │   ├── courseinfo/           # Course info page — components & props
 │   ├── unicafe/              # Feedback app — state & derived statistics
 │   └── anecdotes/            # Anecdotes app — voting & most-voted highlight
-└── part2/                    # Communicating with a server
-    ├── course-info/          # Extended course info — lists, keys, totals
-    └── phonebook/            # Phonebook — forms, filtering, REST client (axios + json-server)
+├── part2/                    # Communicating with a server
+│   ├── course-info/          # Extended course info — lists, keys, totals
+│   └── phonebook/            # Phonebook — forms, filtering, REST client (axios)
+└── part3/                    # Node.js + Express backend
+    └── phonebook-backend/    # REST API, MongoDB, validation, ESLint, Render
 ```
 
 ## Projects
@@ -44,12 +46,12 @@ fso/
 
 ## What I've learned so far
 
-<!-- 3–5 bullets in your own words — concepts, not just technologies.
-     Link to the part READMEs for deeper reflections. -->
+- React components, state, and talking to a REST API from the browser ([part1](./part1), [part2](./part2))
+- Node/Express servers, MongoDB with Mongoose, validation, linting, and deploying the full phonebook ([part3](./part3/phonebook-backend))
 
 ## Tech stack
 
-React 19 · Express · Render · json-server · Node.js
+React 19 · Node.js · Express · MongoDB / Mongoose · ESLint · Render
 
 <!-- Update this line as the course adds Node.js, Express, databases, etc. -->
 
@@ -67,4 +69,4 @@ type(scope): short description
 
 ## Currently working on
 
-<!-- e.g. Part 2 — phonebook exercises: persisting new entries to the backend -->
+Part 4 — testing Express servers and user administration
